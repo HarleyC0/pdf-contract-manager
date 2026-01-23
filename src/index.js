@@ -4,19 +4,19 @@ const index = express()
 
 const port = process.env.PORT || 3000; // de forma local 3000, en vercel asignara un puerto
 
-const modifyPdf = require('./Bienvenida')
-const CertificaciondeVerdadCliente = require('./CertificaciondeVerdadCliente');
-const DeclaracionCertificacion = require('./DeclaracionCertificacion');
-const acuerdosDeServicio = require('./acuerdosDeServicio');
-const pagare = require('./pagare')
-const anexo1 = require('./anexo1');
-const renunciaResponsabilidad = require('./renunciaResponsabilidad');
-const metodosDePago = require('./metodosDePago');
-const formatofecha = require('./fechasFormato');
+const modifyPdf = require('./pdf/Bienvenida')
+const CertificaciondeVerdadCliente = require('./pdf/CertificaciondeVerdadCliente');
+const DeclaracionCertificacion = require('./pdf/DeclaracionCertificacion');
+const acuerdosDeServicio = require('./pdf/acuerdosDeServicio');
+const pagare = require('./pdf/pagare')
+const anexo1 = require('./pdf/anexo1');
+const renunciaResponsabilidad = require('./pdf/renunciaResponsabilidad');
+const metodosDePago = require('./pdf/metodosDePago');
+const formatofecha = require('./utils/fechasFormato');
 
 // ruta para servir el index.html en pagina principal
 index.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    res.sendFile(path.join(process.cwd(), 'public', 'index.html'));
 });
 
 // Middleware para servir archivos estáticos (permite encontrar y servir styles.css)
@@ -89,14 +89,14 @@ index.post('/submit', async (req, res) => {
         // Meter aqui el link de "Descargar PDF"
         res.send(`
             <h2>PDF generado para: ${name}.</h2>
-            <!-- <p><a href=/download?file=Bienvenida${cleanName}.pdf>Descargar Bienvenida ${name}</a></p> -->
+            <!-- <p><a href=/download?file=Bienvenida${cleanName}.pdf>Descargar Bienvenida ${name} (Fuera de uso)</a></p> -->
             <p><a href=/download?file=CertificaciondeVerdadCliente${cleanName}.pdf>Descargar CertificacionDeVerdad ${name}</a></p>
             <p><a href=/download?file=DeclaracionyCertificaciondelPeticionario${cleanName}.pdf>Descargar DeclaracionyCertificacion ${name}</a></p>
             <p><a href=/download?file=AcuerdosDeServicio${cleanName}.pdf>Descargar Acuerdos De Servicio ${name}</a></p>
             <p><a href=/download?file=EsquemaDePago${cleanName}.pdf>Descargar Esquema de Pago ${name}</a></p>
             <p><a href=/download?file=Pagare${cleanName}.pdf>Descargar Pagare ${name}</a></p>
             <p><a href=/download?file=RenunciaDeResponsabilidad${cleanName}.pdf>Descargar RenunciaResponsabilidad ${name}</a></p>
-            <!-- <p><a href=/download?file=MetodosDePago${cleanName}.pdf>Descargar MetodosDePago ${name}</a></p> -->
+            <!-- <p><a href=/download?file=MetodosDePago${cleanName}.pdf>Descargar MetodosDePago ${name} (Fuera de uso)</a></p> -->
         `)
     } catch (error) {
         console.log("Error generando el PDF", error)

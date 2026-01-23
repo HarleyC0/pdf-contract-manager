@@ -6,9 +6,10 @@ const { text } = require('stream/consumers');
 // Configurar las fuentes
 const fonts = {
     Arial: {
-        normal: path.join(__dirname, 'public/fonts/02587_ARIALMT.ttf'),
-        bold: path.join(__dirname, 'public/fonts/ARIALBOLDMT.OTF'),
-        italics: path.join(__dirname, 'public/fonts/2248-font.ttf'), // Bold Italic
+        normal: path.join(process.cwd(), 'public/fonts/02587_ARIALMT.ttf'),
+        bold: path.join(process.cwd(), 'public/fonts/ARIALBOLDMT.OTF'),
+        italics: path.join(process.cwd(), 'public/fonts/2248-font.ttf'), // Bold Italic
+        bolditalics: path.join(process.cwd(), 'public/fonts/02587_ARIALMT.ttf')
     }
 };
 

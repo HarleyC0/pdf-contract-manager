@@ -2,41 +2,36 @@ const express = require('express')
 const path = require('path')
 const index = express()
 
-const port = process.env.PORT || 3000; // de forma local 3000, en vercel asignara un puerto
+//const port = process.env.PORT || 3000; // de forma local 3000, en vercel asignara un puerto
 
-const modifyPdf = require('./pdf/Bienvenida')
-const CertificaciondeVerdadCliente = require('./pdf/CertificaciondeVerdadCliente');
-const DeclaracionCertificacion = require('./pdf/DeclaracionCertificacion');
-const acuerdosDeServicio = require('./pdf/acuerdosDeServicio');
-const pagare = require('./pdf/pagare')
-const anexo1 = require('./pdf/anexo1');
-const renunciaResponsabilidad = require('./pdf/renunciaResponsabilidad');
-const metodosDePago = require('./pdf/metodosDePago');
-const formatofecha = require('./utils/fechasFormato');
+const modifyPdf = require('../src/pdf/Bienvenida')
+const CertificaciondeVerdadCliente = require('../src/pdf/CertificaciondeVerdadCliente');
+const DeclaracionCertificacion = require('../src/pdf/DeclaracionCertificacion');
+const acuerdosDeServicio = require('../src/pdf/acuerdosDeServicio');
+const pagare = require('../src/pdf/pagare')
+const anexo1 = require('../src/pdf/anexo1');
+const renunciaResponsabilidad = require('../src/pdf/renunciaResponsabilidad');
+const metodosDePago = require('../src/pdf/metodosDePago');
+const formatofecha = require('../src/utils/fechasFormato');
+
+// Middleware para leer datos del formulario
+index.use(express.urlencoded({ extended: true }));
+index.use(express.json());
+
+// Middleware para servir archivos estáticos (permite encontrar y servir styles.css)
+index.use(express.static(path.join(process.cwd(), 'public')))
 
 // ruta para servir el index.html en pagina principal
 index.get('/', (req, res) => {
     res.sendFile(path.join(process.cwd(), 'public', 'index.html'));
 });
 
-// Middleware para servir archivos estáticos (permite encontrar y servir styles.css)
-index.use(express.static(path.join(process.cwd(), 'public')))
-
 index.get('/status', (req, res) => {
-    res.send({
-        up: true
-    });
+    res.send({ up: true });
 });
-
-// Middleware para leer datos del formulario
-
-index.use(express.urlencoded({ extended: true }));
-
 
 index.post('/submit', async (req, res) => {
 
-
-    
     const {
         'srA': srA,
         'name': name,
@@ -120,6 +115,8 @@ index.get('/download', (req, res) => {
     });
 });
 
-index.listen(port, () => {
-    console.log(`Running server on port ${port}`);
-});
+//index.listen(port, () => {
+//    console.log(`Running server on port ${port}`);
+//});
+
+module.exports = index;
